@@ -9,7 +9,7 @@ We tested the metrics model confidence (pTM + ipTM), ipTM, pDockQ, pDockQ2 and L
 [Details on how to install ColabFold](https://github.com/YoshitakaMo/localcolabfold)  
 
 We ran predictions through ColabFold (reference) in two steps. First the input features were generated using the `colabfold_search` and then the predictions were run on the input features using `colabfold_batch`. This approach allows to perform the complete analysis locally without connection to the ColabFold server and therefore is not limited by the Colabfold server. However, this requires setting up local databases for genetic and template search. 
-For information on the databases please visit the [Colabfold repository](https://github.com/sokrypton/ColabFold/tree/main). This also requires the PDB templates similar to the original AlphaFold2 implementation.  
+For information on the databases please visit the [ColabFold repository](https://github.com/sokrypton/ColabFold/tree/main). This also requires the PDB templates similar to the original AlphaFold2 implementation.  
 
 Detailed config.json with parameters we used can be found in `example_files`.
 ## Colabfold_search
@@ -211,5 +211,11 @@ B 0.008154758661146998
 ```
 We used the average of the per chain pDockQ_A and pDockQ_B to calculate the pDockQ2.
 
-
-[Run ColabFold on your local computer](https://github.com/YoshitakaMo/localcolabfold) by Yoshitaka Moriwaki
+# References
+[Run ColabFold on your local computer](https://github.com/YoshitakaMo/localcolabfold) by Yoshitaka Moriwaki  
+[Bryant et al., 2022](https://doi.org/10.1038/s41467-022-28865-w)  
+[Zhu et al., 2023](https://doi.org/10.1093/bioinformatics/btad424)  
+[A.-R. Kim et al., 2024](https://doi.org/10.1101/2024.02.19.580970)  
+[Jumper et al., 2021](https://doi.org/10.1038/s41586-021-03819-2)  
+[Evans et al., 2022](https://doi.org/10.1101/2021.10.04.463034)  
+[Mirdita et al., 2022](https://doi.org/10.1038/s41592-022-01488-1)  
