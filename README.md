@@ -1,17 +1,17 @@
 # Alphafold_interaction_discovery
 
 This repository provides details on using AlphaFold for protein-protein interaction discovery and was used for analysis in the paper XXX.
-We used AlphaFold-Multimer (through Colabfold) and AlphaFold3 (throught the AlphaFold-server) to screen for protein-protein interactions.
-To validate this approach we evaluated different confidence metrics on an Arabidopsis protein-protein interaction reference set.
-We tested the metrics model confidence (pTM + ipTM), ipTM, pDockQ, pDockQ2 and LIS(Bryant et al., 2022; Evans et al., 2022; Jumper et al., 2021; A.-R. Kim et al., 2024; Zhu et al., 2023). This repository includes details on how to obtain the metrics from Colabfold and AlphaFold3 outputs. By default AlphaFold will produce five predictions which are based on five different models. Using all the five outputs and averaging metrics across the outputs can improve the performance of the metrics particularly for AlphaFold-Multimer predictions.
+We used AlphaFold-Multimer (through Colabfold reference) and AlphaFold3 (throught the AlphaFold-server reference) to screen for protein-protein interactions.
+To validate this approach we evaluated different confidence metrics on an Arabidopsis protein-protein interaction reference set (reference).
+We tested the metrics model confidence (pTM + ipTM), ipTM, pDockQ, pDockQ2 and LIS(Bryant et al., 2022; Evans et al., 2022; Jumper et al., 2021; A.-R. Kim et al., 2024; Zhu et al., 2023). This repository includes details on how to obtain the metrics from AlphaFold-Multimer and AlphaFold3 outputs. By default AlphaFold will produce five predictions which are based on five different models. Using all the five outputs and averaging metrics across the outputs can improve the performance of the metrics particularly for AlphaFold-Multimer predictions.
 
 # Running predictions
 [Details on how to install ColabFold](https://github.com/YoshitakaMo/localcolabfold)  
 
-We ran predictions through ColabFold (reference) in two steps. First the input features were generated using the `colabfold_search` commmand and then the predictions were run on the input features using `colabfold_batch`. This approach allows to perform the complete analysis locally without communication with the Colabfold server and therefore is not limited by the Colabfold server. However, this requires setting up local databases for genetic and template search. 
+We ran predictions through ColabFold (reference) in two steps. First the input features were generated using the `colabfold_search` and then the predictions were run on the input features using `colabfold_batch`. This approach allows to perform the complete analysis locally without connection to the ColabFold server and therefore is not limited by the Colabfold server. However, this requires setting up local databases for genetic and template search. 
 For information on the databases please visit the [Colabfold repository](https://github.com/sokrypton/ColabFold/tree/main). This also requires the PDB templates similar to the original AlphaFold2 implementation.  
 
-Detailed config.json with parameters used can be found in `example_files`.
+Detailed config.json with parameters we used can be found in `example_files`.
 ## Colabfold_search
 This step requires a lot of RAM and CPUs. This script was run with 16 CPUs (Intel(R) Xeon(R) Gold 6448H) and 280GB of RAM. With these specifications it took 6-12 h for 5000 sequences.
 The input file is a .csv file with format like the EXAMPLE_INPUT.csv file.
