@@ -210,6 +210,15 @@ A 0.010403525668536952
 B 0.008154758661146998
 ```
 We used the average of the per chain pDockQ_A and pDockQ_B to calculate the pDockQ2.
+# Example calculations on metrics
+The `example_calculations.R` script allows to perform perform basic calculations such as deteriming the best and average metrics across AlphaFold-Multimer and AlphaFold3 outputs, and calculating model confidence (0.2*pTM + 0.8*ipTM) or pDockQ2. It also shows how to calculate the Mean AFM score and the AFM & AF3 score from those metrics. The script can be run with `example_data_1.csv` and `example_data_2.csv`. This script was used to generate Dataset S1, Dataset S2, Dataset S3, Dataset S4 and Dataset S5 from our publication.
+
+
+# ROC analysis
+The `ROC_analysis.R` script is provided and allows to perform the Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) statistics seen in our paper in SI Appendix Fig. S5D (to be published).
+Example data is deposited in `example_files/example_data_3.csv` and the full analysis can be run on Dataset S1 from the publication.
+
+
 
 # References
 [Run ColabFold on your local computer](https://github.com/YoshitakaMo/localcolabfold) by Yoshitaka Moriwaki  
