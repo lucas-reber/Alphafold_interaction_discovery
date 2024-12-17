@@ -1,20 +1,19 @@
 # Alphafold_interaction_discovery
 
-This repository provides details on using AlphaFold for protein-protein interaction discovery and was used for analysis in the paper XXX.
-We used AlphaFold-Multimer (through Colabfold reference) and AlphaFold3 (throught the AlphaFold-server reference) to screen for protein-protein interactions.
-To validate this approach we evaluated different confidence metrics on an Arabidopsis protein-protein interaction reference set (reference).
-We tested the metrics model confidence (pTM + ipTM), ipTM, pDockQ, pDockQ2 and LIS(Bryant et al., 2022; Evans et al., 2022; Jumper et al., 2021; A.-R. Kim et al., 2024; Zhu et al., 2023). This repository includes details on how to obtain the metrics from AlphaFold-Multimer and AlphaFold3 outputs. By default AlphaFold will produce five predictions which are based on five different models. Using all the five outputs and averaging metrics across the outputs can improve the performance of the metrics particularly for AlphaFold-Multimer predictions.
+This repository provides details on using AlphaFold for protein-protein interaction discovery and was used for analysis in the paper XXX (unpublished).
+We used AlphaFold-Multimer (as implemented in [ColabFold](https://doi.org/10.1038/s41592-022-01488-1)) and AlphaFold3 (using the [AlphaFold Server](https://golgi.sandbox.google.com/about)) for predictions of interactions.
+We used different metrics to evaluate predictions: model confidence (pTM + ipTM), ipTM, pDockQ, pDockQ2 and LIS (Bryant et al., 2022; Evans et al., 2022; Jumper et al., 2021; A.-R. Kim et al., 2024; Zhu et al., 2023). This repository includes details on how to obtain extract these metrics from AlphaFold-Multimer and AlphaFold3 outputs. By default AlphaFold will produce five predictions which are based on five different models. Using all the five outputs and averaging metrics across the outputs can improve the performance of the metrics particularly for AlphaFold-Multimer predictions.
 
 # Running predictions
 [Details on how to install ColabFold](https://github.com/YoshitakaMo/localcolabfold)  
 
-We ran predictions through ColabFold (reference) in two steps. First the input features were generated using the `colabfold_search` and then the predictions were run on the input features using `colabfold_batch`. This approach allows to perform the complete analysis locally without connection to the ColabFold server and therefore is not limited by the Colabfold server. However, this requires setting up local databases for genetic and template search. 
+We ran predictions through ColabFold ([Mirdita et al., 2022](https://doi.org/10.1038/s41592-022-01488-1)) in two steps. First the input features were generated using the `colabfold_search` and then the predictions were run on the input features using `colabfold_batch`. This approach allows to perform the complete analysis locally without connection to the ColabFold server and therefore is not limited by the ColabFold server. However, this requires setting up local databases for genetic and template search. 
 For information on the databases please visit the [ColabFold repository](https://github.com/sokrypton/ColabFold/tree/main). This also requires the PDB templates similar to the original AlphaFold2 implementation.  
 
-Detailed config.json with parameters we used can be found in `example_files`.
+Detailed config.json with the parameters we used can be found in `example_files`.
 ## Colabfold_search
 This step requires a lot of RAM and CPUs. This script was run with 16 CPUs (Intel(R) Xeon(R) Gold 6448H) and 280GB of RAM. With these specifications it took 6-12 h for 5000 sequences.
-The input file is a .csv file with format like the EXAMPLE_INPUT.csv file.
+The input file is a csv file with format like the EXAMPLE_INPUT.csv file.
 For multimer prediction the multiple protein sequences are all pasted in one line but separated by a colon ":".
 
 Further requirements:  
@@ -151,7 +150,7 @@ To calculate the model confidence score use this formula: Model confidence = ipT
 
 ## LIS
 The Local Interaction Score was developed by [A.-R. Kim et al., 2024](https://doi.org/10.1101/2024.02.19.580970).
-We obtained scripts from the [AFM-LIS repository](https://github.com/flyark/AFM-LIS) and modified them were needed.
+We obtained scripts from the [AFM-LIS repository](https://github.com/flyark/AFM-LIS) and modified them where needed.
 Use `LIS-AFM.py` script to extract LIS score from AlphaFold-Multimer predictions performed through Colabfold.  
 Usage:
 ```
@@ -162,7 +161,7 @@ Output:
 Local Interaction Score : 0.000
 ```
 
-Use `LIS-AF3.py` script to extract LIS score from AlphaFold2 predictions performed through the AlphaFold-server.
+Use `LIS-AF3.py` script to extract LIS score from AlphaFold2 predictions performed through the AlphaFold Server.
 Usage:
 ```
 python LIS_AF3.py -json fold_at1g01550_vs_at2g30680_full_data_0.json
@@ -176,7 +175,7 @@ Local Interaction Score_i_avg : 0.000
 
 
 ## pDockQ
-Only applicable for AlphaFold2/ColabFold predictions.
+Only applicable for AlphaFold-Multimer/ColabFold predictions.
 We used [pDockQ scripts](https://gitlab.com/ElofssonLab/FoldDock/-/blob/main/src/) by [Bryant et al., 2022](https://doi.org/10.1038/s41467-022-28865-w)
 
 Usage: 
@@ -189,7 +188,7 @@ pDockQ = 0.058 for AT1G01550_vs_AT2G30680_relaxed_rank_001_alphafold2_multimer_v
 This corresponds to a PPV of at least 0.63555449
 ```
 ## pDockQ2
-Only applicable for AlphaFold2/ColabFold predictions.
+Only applicable for AlphaFold-Multimer/ColabFold predictions.
 We used [pDockQ2 scripts](https://gitlab.com/ElofssonLab/afm-benchmark/-/blob/main/src/pdockq2.py) by [Zhu et al., 2023](https://doi.org/10.1093/bioinformatics/btad424)  
 This scripts takes a pickle file as input which was part of the output of the original AlphaFold2 implementation but not part of Colabfold output.  
 We provide a `make_pickle.py` script to create pickle files from ColabFold json files.
@@ -228,3 +227,5 @@ Example data is deposited in `example_files/example_data_3.csv` and the full ana
 [Jumper et al., 2021](https://doi.org/10.1038/s41586-021-03819-2)  
 [Evans et al., 2022](https://doi.org/10.1101/2021.10.04.463034)  
 [Mirdita et al., 2022](https://doi.org/10.1038/s41592-022-01488-1)  
+[Abramson et al., 2024](https://doi.org/10.1038/s41586-024-07487-w)
+
