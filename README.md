@@ -2,7 +2,7 @@
 
 This repository provides details on using AlphaFold for protein-protein interaction discovery and was used for analysis in the paper XXX (unpublished).
 We used AlphaFold-Multimer (as implemented in [ColabFold](https://doi.org/10.1038/s41592-022-01488-1)) and AlphaFold3 (using the [AlphaFold Server](https://golgi.sandbox.google.com/about)) for predictions of interactions.
-We used different metrics to evaluate predictions: model confidence (pTM + ipTM), ipTM, pDockQ, pDockQ2 and LIS (Bryant et al., 2022; Evans et al., 2022; Jumper et al., 2021; A.-R. Kim et al., 2024; Zhu et al., 2023). This repository includes details on how to obtain extract these metrics from AlphaFold-Multimer and AlphaFold3 outputs. By default AlphaFold will produce five predictions which are based on five different models. Using all the five outputs and averaging metrics across the outputs can improve the performance of the metrics particularly for AlphaFold-Multimer predictions.
+We used different metrics to evaluate predictions: model confidence (pTM + ipTM), ipTM, pDockQ, pDockQ2 and LIS (Bryant et al., 2022; Evans et al., 2022; Jumper et al., 2021; A.-R. Kim et al., 2024; Zhu et al., 2023). Details on how to extract these metrics from AlphaFold-Multimer and AlphaFold3 outputs can be found below. 
 
 # Running predictions
 [Details on how to install ColabFold](https://github.com/YoshitakaMo/localcolabfold)  
@@ -10,11 +10,11 @@ We used different metrics to evaluate predictions: model confidence (pTM + ipTM)
 We ran predictions through ColabFold ([Mirdita et al., 2022](https://doi.org/10.1038/s41592-022-01488-1)) in two steps. First the input features were generated using the `colabfold_search` and then the predictions were run on the input features using `colabfold_batch`. This approach allows to perform the complete analysis locally without connection to the ColabFold server and therefore is not limited by the ColabFold server. However, this requires setting up local databases for genetic and template search. 
 For information on the databases please visit the [ColabFold repository](https://github.com/sokrypton/ColabFold/tree/main). This also requires the PDB templates similar to the original AlphaFold2 implementation.  
 
-Detailed config.json with the parameters we used can be found in `example_files`.
-## Colabfold_search
-This step requires a lot of RAM and CPUs. This script was run with 16 CPUs (Intel(R) Xeon(R) Gold 6448H) and 280GB of RAM. With these specifications it took 6-12 h for 5000 sequences.
-The input file is a csv file with format like the EXAMPLE_INPUT.csv file.
-For multimer prediction the multiple protein sequences are all pasted in one line but separated by a colon ":".
+A detailed `config.json` with the parameters we used for ColabFold predictions can be found in `example_files`.
+## Colabfold_search - Input feature generation
+This step requires a lot of RAM and CPUs. We used 16 CPUs (Intel(R) Xeon(R) Gold 6448H) and 280GB of RAM. With these specifications it took 6-12 h for 5000 sequences.
+The input file is a csv file formatted like the `EXAMPLE_INPUT.csv` file.
+For multimer predictions the multiple protein sequences are all pasted in one line but separated by a colon ":".
 
 Further requirements:  
 requires conda installation (e.g. Miniconda3/22.11.1-1)  
@@ -38,7 +38,7 @@ colabfold_search \
   /path/to/database/mmseqs/uniref30_2302 \ 
   msas #output directory
 ```
-## Colabfold_batch
+## Colabfold_batch - Structure prediction
 
 This step requires a GPU. We used 80 GB A100 or H100 nVidia GPUs. A L40S 48GB GPU was also successfully used. In addtion we used 2 CPU cores (Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz) and 70-150GB of RAM depending on protein length. Proteins of over 4000 amino acids were the approximate limit.
 A single GPU can do approximately 50 prediction per day depending on protein length. We frequently used 30-60 GPUs in parallel allowing us to do around 1500-3000 predictions in a day. Note that this script should be run on an individual GPU, but multiple instances may be run at the same time.
@@ -131,7 +131,7 @@ for INPUTFILE in "${msas_folder}"/*.a3m; do
 done
 ```
 # Extracting confidence metrics
-
+By default AlphaFold will produce five predictions which are based on five different models. Using all the five outputs and averaging metrics across the outputs can improve the performance of the metrics for the selection of interaction candidates.
 ## ipTM and pTM
 
 The interface predicted TM score (ipTM) and predicted TM score (pTM) are directly provided by AlphaFold predictions. They can be found in the json file (e.g. in `example_files` for Colabfold `AT1G01550_vs_AT2G30680_scores_rank_001_alphafold2_multimer_v3_model_1_seed_000.json` and for AlphaFold3 `fold_at1g01550_vs_at2g30680_summary_confidences_0.json`).  
