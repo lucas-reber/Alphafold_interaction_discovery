@@ -50,15 +50,14 @@ requires the AlphaFold2 templates (see https://github.com/google-deepmind/alphaf
 
 General setup:  
 ```
-eval "$(conda shell.bash hook)"
-
 # activate the colabfold environment
+eval "$(conda shell.bash hook)"
 conda activate /path/to/localcolabfold/colabfold-conda
 
-# Define the local PDB path
+# Define the path to local AlphaFold2 templates
 LOCALPDBPATH="/path/to/v2.3.2/pdb_mmcif/mmcif_files"
 
-# Define the random seed
+# Define a random seed for reproducibility 
 RANDOMSEED=0
 ```
 Run prediction on a single input file:  
@@ -151,7 +150,7 @@ To calculate the model confidence score use this formula: Model confidence = ipT
 ## LIS
 The Local Interaction Score was developed by [A.-R. Kim et al., 2024](https://doi.org/10.1101/2024.02.19.580970).
 We obtained scripts from the [AFM-LIS repository](https://github.com/flyark/AFM-LIS) and modified them where needed.
-Use `LIS-AFM.py` script to extract LIS score from AlphaFold-Multimer predictions performed through Colabfold.  
+Use `LIS-AFM.py` script to extract LIS score from AlphaFold-Multimer predictions performed through ColabFold.  
 Usage:
 ```
 python LIS_AFM.py -pdb AT1G01550_vs_AT2G30680_relaxed_rank_001_alphafold2_multimer_v3_model_1_seed_000.pdb -json AT1G01550_vs_AT2G30680_scores_rank_001_alphafold2_multimer_v3_model_1_seed_000.json
@@ -175,7 +174,7 @@ Local Interaction Score_i_avg : 0.000
 
 
 ## pDockQ
-Only applicable for AlphaFold-Multimer/ColabFold predictions.
+Only applicable to AlphaFold-Multimer/ColabFold predictions.
 We used [pDockQ scripts](https://gitlab.com/ElofssonLab/FoldDock/-/blob/main/src/) by [Bryant et al., 2022](https://doi.org/10.1038/s41467-022-28865-w)
 
 Usage: 
@@ -188,9 +187,9 @@ pDockQ = 0.058 for AT1G01550_vs_AT2G30680_relaxed_rank_001_alphafold2_multimer_v
 This corresponds to a PPV of at least 0.63555449
 ```
 ## pDockQ2
-Only applicable for AlphaFold-Multimer/ColabFold predictions.
+Only applicable to AlphaFold-Multimer/ColabFold predictions.
 We used [pDockQ2 scripts](https://gitlab.com/ElofssonLab/afm-benchmark/-/blob/main/src/pdockq2.py) by [Zhu et al., 2023](https://doi.org/10.1093/bioinformatics/btad424)  
-This scripts takes a pickle file as input which was part of the output of the original AlphaFold2 implementation but not part of Colabfold output.  
+This script takes a pickle file as input which was part of the output of the original AlphaFold2 implementation but not part of Colabfold output.  
 We provide a `make_pickle.py` script to create pickle files from ColabFold json files.
 Usage:
 ```
@@ -210,7 +209,7 @@ B 0.008154758661146998
 ```
 We used the average of the per chain pDockQ_A and pDockQ_B to calculate the pDockQ2.
 # Example calculations on metrics
-The `example_calculations.R` script allows to perform perform basic calculations such as deteriming the best and average metrics across AlphaFold-Multimer and AlphaFold3 outputs, and calculating model confidence (0.2*pTM + 0.8*ipTM) or pDockQ2. It also shows how to calculate the Mean AFM score and the AFM & AF3 score from those metrics. The script can be run with `example_data_1.csv` and `example_data_2.csv`. This script was used to generate Dataset S1, Dataset S2, Dataset S3, Dataset S4 and Dataset S5 from our publication.
+The `example_calculations.R` script allows to perform perform basic calculations such as determining the best and average metrics across AlphaFold-Multimer and AlphaFold3 outputs, and calculating model confidence (0.2*pTM + 0.8*ipTM) or pDockQ2. It also shows how to calculate the Mean AFM score and the AFM & AF3 score from those metrics. The script can be run with `example_data_1.csv` and `example_data_2.csv`. This script was used to generate Dataset S1, Dataset S2, Dataset S3, Dataset S4 and Dataset S5 from our publication.
 
 
 # ROC analysis
