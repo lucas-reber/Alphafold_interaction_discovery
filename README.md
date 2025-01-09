@@ -150,7 +150,7 @@ We extracted the scores using the following bash code:
 To calculate the model confidence score use this formula: Model confidence = ipTM * 0.8 + pTM * 0.2.
 
 ## LIS
-This section incorporates code from [AFM-LIS repository] ([[Original Repository URL](https://github.com/flyark/AFM-LIS)]) by [A.-R. Kim et al., 2024](https://doi.org/10.1101/2024.02.19.580970), licensed under the MIT License.
+This section incorporates code from [AFM-LIS repository](https://github.com/flyark/AFM-LIS) by [A.-R. Kim et al., 2024](https://doi.org/10.1101/2024.02.19.580970), licensed under the MIT License.
 
 Use `LIS-AFM.py` script to extract LIS score from AlphaFold-Multimer predictions performed through ColabFold.  
 Usage:
