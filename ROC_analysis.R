@@ -18,8 +18,8 @@
 # `best AF3 ipTM`
 # `best AF3 model confidence`
 # `Mean AFM score`
-# `Combined AFM & AF3 score`
-### therefore pick columns 6:22
+# `AFM & AF3 score`
+
 
 library(data.table)
 library(pROC)
