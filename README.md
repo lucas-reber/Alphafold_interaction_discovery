@@ -4,6 +4,8 @@ This repository provides details on using AlphaFold for protein-protein interact
 We used AlphaFold-Multimer (as implemented in [ColabFold](https://doi.org/10.1038/s41592-022-01488-1)) and AlphaFold3 (using the [AlphaFold Server](https://golgi.sandbox.google.com/about)) for predictions of interactions.
 We used different metrics to evaluate predictions: model confidence (pTM + ipTM), ipTM, pDockQ, pDockQ2 and LIS (Bryant et al., 2022; Evans et al., 2022; Jumper et al., 2021; A.-R. Kim et al., 2024; Zhu et al., 2023). Details on how to extract these metrics from AlphaFold-Multimer and AlphaFold3 outputs can be found below. 
 
+For questions to this repository please contact us ( lreber@student.unimelb.edu.au ).
+
 # Running predictions
 [Details on how to install ColabFold](https://github.com/YoshitakaMo/localcolabfold)  
 
@@ -12,18 +14,18 @@ For information on the databases please visit the [ColabFold repository](https:/
 
 A detailed `config.json` with the parameters we used for ColabFold predictions can be found in `example_files`.
 ## Colabfold_search - Input feature generation
-This step requires a lot of RAM and CPUs. We used 16 CPUs (Intel(R) Xeon(R) Gold 6448H) and 280GB of RAM. With these specifications it took 6-12 h for 5000 sequences.
+This step requires a lot of RAM and CPUs. We used 16 CPUs (Intel(R) Xeon(R) Gold 6448H) and 280GB of RAM. With these specifications it took around 12 h for 10000 sequences.
 The input file is a csv file formatted like the `EXAMPLE_INPUT.csv` file.
 For multimer predictions the multiple protein sequences are all pasted in one line but separated by a colon ":".
 
 Further requirements:  
 requires conda installation (e.g. Miniconda3/22.11.1-1)  
 requires mmseqs2 (e.g. MMseqs2/15-6f452)  
-requires database to be setup (https://colabfold.mmseqs.com)  
+requires genetic database to be setup (https://colabfold.mmseqs.com)  
 
 
 ```
-# activate the colabfold environment
+# activate the ColabFold environment
 eval "$(conda shell.bash hook)"
 conda activate /path/to/localcolabfold/colabfold-conda
 
@@ -40,7 +42,7 @@ colabfold_search \
 ```
 ## Colabfold_batch - Structure prediction
 
-This step requires a GPU. We used 80 GB A100 or H100 nVidia GPUs. A L40S 48GB GPU was also successfully used. In addtion we used 2 CPU cores (Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz) and 70-150GB of RAM depending on protein length. Proteins of over 4000 amino acids were the approximate limit.
+This step requires a GPU. We used 80 GB A100 or H100 nVidia GPUs. A L40S 48GB GPU was also successfully used. In addtion we used 2 CPU cores (Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz) and 70-150GB of RAM depending on protein length. Proteins of over 4000 frequently failed in the predictions due to computational limitations.
 A single GPU can do approximately 50 prediction per day depending on protein length. We frequently used 30-60 GPUs in parallel allowing us to do around 1500-3000 predictions in a day. Note that this script should be run on an individual GPU, but multiple instances may be run at the same time.
 
 Further requirements:  
@@ -50,7 +52,7 @@ requires the AlphaFold2 templates (see https://github.com/google-deepmind/alphaf
 
 General setup:  
 ```
-# activate the colabfold environment
+# activate the ColabFold environment
 eval "$(conda shell.bash hook)"
 conda activate /path/to/localcolabfold/colabfold-conda
 
@@ -133,7 +135,7 @@ done
 By default AlphaFold will produce five predictions which are based on five different models. Using all the five outputs and averaging metrics across the outputs can improve the performance of the metrics for the selection of interaction candidates.
 ## ipTM and pTM
 
-The interface predicted TM score (ipTM) and predicted TM score (pTM) are directly provided by AlphaFold predictions. They can be found in the json file (e.g. in `example_files` for Colabfold `AT1G01550_vs_AT2G30680_scores_rank_001_alphafold2_multimer_v3_model_1_seed_000.json` and for AlphaFold3 `fold_at1g01550_vs_at2g30680_summary_confidences_0.json`).  
+The interface predicted TM score (ipTM) and predicted TM score (pTM) are directly provided by AlphaFold predictions. They can be found in the json file (examples can be found in `example_files` for Colabfold `AT1G01550_vs_AT2G30680_scores_rank_001_alphafold2_multimer_v3_model_1_seed_000.json` and for AlphaFold3 `fold_at1g01550_vs_at2g30680_summary_confidences_0.json`).  
 
 
 We extracted the scores using the following bash code:
@@ -213,7 +215,7 @@ The `example_calculations.R` script allows to perform perform basic calculations
 
 
 # ROC analysis
-The `ROC_analysis.R` script is provided and allows to perform the Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) statistics seen in our paper in SI Appendix Fig. S5D (to be published).
+The `ROC_analysis.R` script is provided and allows to perform the Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) statistics seen in our paper in SI Appendix Fig. S5 (to be published).
 Example data is deposited in `example_files/example_data_3.csv` and the full analysis can be run on Dataset S1 from the publication.
 
 
