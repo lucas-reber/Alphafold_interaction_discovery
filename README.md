@@ -162,7 +162,7 @@ Output:
 Local Interaction Score : 0.000
 ```
 
-Use `LIS-AF3.py` script to extract LIS score from AlphaFold2 predictions performed through the AlphaFold Server.
+Use `LIS-AF3.py` script to extract LIS score from AlphaFold3 predictions (only dimers) performed through the AlphaFold Server.
 Usage:
 ```
 python LIS_AF3.py -json fold_at1g01550_vs_at2g30680_full_data_0.json
