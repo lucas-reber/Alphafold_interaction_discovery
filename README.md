@@ -211,7 +211,7 @@ B 0.008154758661146998
 ```
 We used the average of the per chain pDockQ_A and pDockQ_B to calculate the pDockQ2.
 # Example calculations on metrics
-The `example_calculations.R` script allows to perform perform basic calculations such as determining the best and average metrics across AlphaFold-Multimer and AlphaFold3 outputs, and calculating model confidence (0.2*pTM + 0.8*ipTM) or pDockQ2. It also shows how to calculate the Mean AFM score and the AFM & AF3 score from those metrics. The script can be run with `example_data_1.csv` and `example_data_2.csv`. This script was used to generate Dataset S1, Dataset S2, Dataset S3, Dataset S4 and Dataset S5 from our publication.
+The `example_calculations.R` script allows to perform perform basic calculations such as determining the best and average metrics across AlphaFold-Multimer and AlphaFold3 outputs, and calculating model confidence or pDockQ2. It also shows how to calculate the Mean AFM score and the AFM & AF3 score from those metrics. The script can be run with `example_data_1.csv` and `example_data_2.csv`. This script was used to generate Dataset S1, Dataset S2, Dataset S3, Dataset S4 and Dataset S5 from our publication.
 
 
 # ROC analysis
